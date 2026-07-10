@@ -174,3 +174,8 @@ Always show the fix as something the user can apply — the corrected HCL, the
 `moved` block, or the ordered migration steps — not just "this will replace the
 resource." A review that names the danger without the safe path just hands the
 hard part back to the user, which is exactly the expertise the skill supplies.
+
+## Prefer JSON plans
+
+When available, ask for `terraform plan -out=tfplan && terraform show -json tfplan` and reason from `resource_changes[].change.actions` (see `reference/patterns.md`).
+

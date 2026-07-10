@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace">
+  <rect width="1280" height="640" fill="#0d1117"/>
+  <rect x="0" y="0" width="1280" height="8" fill="#7B42BC"/>
+
+  <!-- title -->
+  <text x="80" y="150" font-size="72" font-weight="bold" fill="#e6edf3">&#128165; terraform-blast-radius</text>
+  <text x="80" y="212" font-size="33" fill="#8b949e">That "small" change is about to destroy your database. This catches it.</text>
+
+  <!-- plan snippet -->
+  <rect x="80" y="262" width="1120" height="196" rx="14" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="112" y="318" font-size="27"><tspan fill="#f85149">-/+</tspan><tspan fill="#e6edf3" xml:space="preserve"> aws_db_instance.main   </tspan><tspan fill="#ff7b72"># forces replacement</tspan></text>
+  <text x="112" y="366" font-size="27"><tspan fill="#8b949e">Plan: 1 to add, 0 to change, </tspan><tspan fill="#f85149">1 to destroy</tspan></text>
+  <text x="112" y="424" font-size="24"><tspan fill="#3fb950">+ lifecycle { prevent_destroy = true }</tspan><tspan fill="#6e7681" xml:space="preserve">   # 0 to destroy</tspan></text>
+
+  <!-- payoff -->
+  <text x="80" y="540" font-size="50" font-weight="bold"><tspan fill="#f85149">1 to destroy</tspan><tspan fill="#e6edf3">  &#8594;  </tspan><tspan fill="#3fb950">0 to destroy</tspan></text>
+  <text x="80" y="588" font-size="25" fill="#8b949e">A Claude Agent Skill that catches destructive Terraform plans &#8212; part of the Ship-Safe family</text>
+</svg>

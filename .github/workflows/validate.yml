@@ -1,0 +1,45 @@
+name: Validate skill
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SKILL.md exists and has valid frontmatter
+        run: |
+          test -f SKILL.md || { echo "::error::SKILL.md is missing"; exit 1; }
+          head -1 SKILL.md | grep -q '^---$' \
+            || { echo "::error::SKILL.md must begin with YAML frontmatter (---)"; exit 1; }
+          grep -q '^name:' SKILL.md \
+            || { echo "::error::frontmatter is missing 'name:'"; exit 1; }
+          grep -q '^description:' SKILL.md \
+            || { echo "::error::frontmatter is missing 'description:'"; exit 1; }
+          name=$(grep -m1 '^name:' SKILL.md | sed 's/^name:[[:space:]]*//')
+          echo "Skill name: $name"
+          test "$name" = "terraform-blast-radius" \
+            || { echo "::error::name must match the folder (terraform-blast-radius)"; exit 1; }
+
+      - name: Reference files exist
+        run: |
+          for f in reference/aws.md reference/gcp-azure.md \
+                   reference/lifecycle.md reference/patterns.md; do
+            test -f "$f" || { echo "::error::missing $f"; exit 1; }
+          done
+
+      - name: Every example has both an unsafe.* and a safe.*
+        run: |
+          for d in examples/*/; do
+            unsafe=$(ls "${d}"unsafe.* 2>/dev/null | head -1 || true)
+            if [ -n "$unsafe" ]; then
+              ls "${d}"safe.* >/dev/null 2>&1 \
+                || { echo "::error::${d} has an unsafe.* but no matching safe.*"; exit 1; }
+            fi
+          done
+
+      - run: echo "Skill structure is valid ✅"

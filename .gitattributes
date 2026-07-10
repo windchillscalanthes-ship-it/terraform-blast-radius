@@ -1,0 +1,14 @@
+# Normalize line endings so the repo is clean when pushed from Windows.
+# Text files are stored with LF in the repo and checked out per-platform.
+* text=auto eol=lf
+
+*.md   text eol=lf
+*.tf   text eol=lf
+*.hcl  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# Treat images as binary (no line-ending or diff munging).
+*.gif  binary
+*.png  binary
+*.jpg  binary

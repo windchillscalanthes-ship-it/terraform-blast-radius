@@ -1,0 +1,50 @@
+name: 🐞 Incorrect or unsafe advice
+description: The skill missed a destructive change, or gave wrong replacement/blast-radius guidance
+title: "[bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the advice correct — **accuracy is everything** for this project.
+        If you can, please link the provider docs for the resource so we can verify and fix fast.
+  - type: textarea
+    id: change
+    attributes:
+      label: The change or plan you were reviewing
+      description: Paste the `.tf` diff or the relevant `terraform plan` output. Redact anything sensitive.
+      render: hcl
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: Provider & version
+      placeholder: e.g. hashicorp/aws 5.60, google 5.x, azurerm 3.x; Terraform 1.9 / OpenTofu 1.8
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What went wrong?
+      options:
+        - Missed a destroy/replace that really happens
+        - Called a replacement "safe" when it causes downtime or data loss
+        - Named the wrong attribute as the one that forces replacement
+        - Flagged something that was actually a safe in-place update (false positive)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: said
+    attributes:
+      label: What the skill said
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: What's actually correct, and why
+      description: Explain the correct behavior. **Please link the provider docs.**
+    validations:
+      required: true

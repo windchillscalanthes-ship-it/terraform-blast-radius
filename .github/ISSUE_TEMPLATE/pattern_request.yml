@@ -1,0 +1,37 @@
+name: 📐 New pattern / provider / resource
+description: Suggest a destructive change, provider, or resource to cover
+title: "[pattern]: "
+labels: ["enhancement", "pattern"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The best pattern PRs name the attribute that forces replacement, whether the resource is stateful, the blast radius, and a safe rewrite — with a source. This template mirrors that.
+  - type: input
+    id: pattern
+    attributes:
+      label: The change or gap
+      description: What resource/attribute (or provider) should the skill cover?
+      placeholder: e.g. aws_msk_cluster broker replacement; DigitalOcean / Kubernetes provider coverage
+    validations:
+      required: true
+  - type: textarea
+    id: danger
+    attributes:
+      label: Why it's destructive
+      description: What forces replacement, is the resource stateful (data loss) or stateless (downtime), and what's the blast radius?
+    validations:
+      required: true
+  - type: textarea
+    id: fix
+    attributes:
+      label: The safe approach
+      description: Ideally copy-pasteable HCL (lifecycle rule, moved block, for_each) or the out-of-band migration steps.
+      render: hcl
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: Link to the provider's registry docs that back this up.
+    validations:
+      required: true

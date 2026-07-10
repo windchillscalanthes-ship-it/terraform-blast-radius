@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" width="820" height="520" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace">
+  <!-- window -->
+  <rect x="8" y="8" width="804" height="504" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+  <!-- title bar -->
+  <circle cx="36" cy="34" r="6" fill="#ff5f56"/>
+  <circle cx="58" cy="34" r="6" fill="#ffbd2e"/>
+  <circle cx="80" cy="34" r="6" fill="#27c93f"/>
+  <text x="410" y="39" text-anchor="middle" font-size="14" fill="#8b949e">terraform-blast-radius &#183; plan review</text>
+  <line x1="8" y1="56" x2="812" y2="56" stroke="#30363d" stroke-width="1"/>
+
+  <!-- prompt -->
+  <text x="40" y="93" font-size="15"><tspan fill="#7ee787">&#10095;</tspan><tspan fill="#e6edf3" xml:space="preserve">  terraform plan</tspan></text>
+
+  <!-- plan output -->
+  <text x="40" y="126" font-size="14.5" fill="#8b949e"># aws_db_instance.main must be replaced</text>
+  <text x="40" y="151" font-size="14.5"><tspan fill="#f85149">-/+</tspan><tspan fill="#e6edf3" xml:space="preserve"> resource </tspan><tspan fill="#a5d6ff">"aws_db_instance"</tspan><tspan fill="#e6edf3" xml:space="preserve"> </tspan><tspan fill="#a5d6ff">"main"</tspan><tspan fill="#e6edf3" xml:space="preserve"> {</tspan></text>
+  <text x="40" y="176" font-size="14.5"><tspan fill="#f0a35e" xml:space="preserve">    ~ storage_encrypted = </tspan><tspan fill="#e6edf3">false -&gt; true</tspan><tspan fill="#ff7b72" xml:space="preserve">  # forces replacement</tspan></text>
+  <text x="40" y="201" font-size="14.5" fill="#e6edf3" xml:space="preserve">  }</text>
+  <text x="40" y="226" font-size="14.5"><tspan fill="#8b949e">Plan: </tspan><tspan fill="#3fb950">1 to add</tspan><tspan fill="#8b949e">, 0 to change, </tspan><tspan fill="#f85149">1 to destroy</tspan><tspan fill="#8b949e">.</tspan></text>
+
+  <!-- finding box -->
+  <rect x="32" y="248" width="756" height="66" rx="8" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+  <text x="52" y="278" font-size="15"><tspan fill="#f85149" font-weight="bold">&#128308;  DATA LOSS</tspan><tspan fill="#8b949e"> &#183; </tspan><tspan fill="#e6edf3">aws_db_instance.main destroyed &amp; recreated</tspan></text>
+  <text x="52" y="300" font-size="13.5" fill="#8b949e">`storage_encrypted` forces replacement &#8212; the database is deleted, all data with it</text>
+
+  <!-- fix -->
+  <text x="40" y="348" font-size="14.5"><tspan fill="#3fb950">&#9989;  fix</tspan><tspan fill="#8b949e"> &#8212; guard it, then migrate encryption out-of-band</tspan></text>
+  <text x="40" y="374" font-size="14.5"><tspan fill="#d2a8ff">lifecycle</tspan><tspan fill="#e6edf3"> { </tspan><tspan fill="#79c0ff">prevent_destroy</tspan><tspan fill="#e6edf3"> = </tspan><tspan fill="#79c0ff">true</tspan><tspan fill="#e6edf3"> }</tspan><tspan fill="#6e7681" xml:space="preserve">   # snapshot &#8594; restore &#8594; cutover</tspan></text>
+
+  <!-- payoff -->
+  <rect x="32" y="400" width="756" height="80" rx="10" fill="#0b1f14" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="410" y="444" text-anchor="middle" font-size="30" font-weight="bold"><tspan fill="#f85149">1 to destroy</tspan><tspan fill="#e6edf3">  &#8594;  </tspan><tspan fill="#3fb950">0 to destroy</tspan></text>
+  <text x="410" y="468" text-anchor="middle" font-size="13" fill="#8b949e">the database survives &#8212; caught before `apply`</text>
+</svg>
